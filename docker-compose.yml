@@ -1,0 +1,28 @@
+version: "3"
+
+services:  
+    frontend:
+        image: frontend
+        container_name: proxy-frontend
+        restart: unless-stopped
+        build:
+            context: ./frontend
+            args:
+                - REACT_APP_SERVICES_HOST=/packages
+        ports:
+            - "80:80"
+        networks:
+            - default
+
+    backend:
+        image: backend
+        restart: unless-stopped
+        build:
+            context: ./backend
+        ports:
+            - "3001:3001"
+        networks: 
+            - default
+
+networks:
+    default:
